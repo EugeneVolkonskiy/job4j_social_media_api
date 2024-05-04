@@ -1,4 +1,4 @@
-create table subscribers
+create table subscribes
 (
     id serial primary key,
     user_id_from bigint references users(id),

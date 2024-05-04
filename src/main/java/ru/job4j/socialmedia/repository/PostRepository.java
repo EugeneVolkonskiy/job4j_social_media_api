@@ -34,7 +34,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("""
             select p from Post p
             where p.user.id in (
-                select s.userFrom.id from Subscriber s
+                select s.userFrom.id from Subscribe s
                 where s.userTo.id = :userToId)
             order by p.created desc
             """)

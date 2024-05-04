@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "subscribers")
+@Table(name = "subscribes")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Subscriber {
+public class Subscribe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
