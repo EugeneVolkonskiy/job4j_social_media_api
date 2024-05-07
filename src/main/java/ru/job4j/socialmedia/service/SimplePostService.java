@@ -9,6 +9,7 @@ import ru.job4j.socialmedia.model.User;
 import ru.job4j.socialmedia.repository.PostRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -17,6 +18,12 @@ public class SimplePostService implements PostService {
 
     private final PostRepository postRepository;
     private final ImageService imageService;
+
+    @Override
+    public Post save(Post post, User user) {
+        post.setUser(user);
+        return postRepository.save(post);
+    }
 
     @Override
     public Post save(Post post, ImageDto imageDto, User user) {
@@ -40,5 +47,10 @@ public class SimplePostService implements PostService {
     @Override
     public List<Post> findByUserId(Long userId) {
         return postRepository.findByUserId(userId);
+    }
+
+    @Override
+    public Optional<Post> findById(Long postId) {
+        return postRepository.findById(postId);
     }
 }

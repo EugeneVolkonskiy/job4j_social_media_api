@@ -20,12 +20,11 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Page<Post> findByOrderByCreatedDesc(Pageable pageable);
 
     @Modifying(clearAutomatically = true)
-    @Query(value = """
-            update Post p set p.title = :title and p.content = :content
+    @Query("""
+            update Post p set p.title = :title, p.content = :content
             where p.id = :id
-            """, nativeQuery = true)
+            """)
     int updateTitleAndContent(@Param("title") String title, @Param("content") String content, @Param("id") Long id);
-
 
     @Modifying(clearAutomatically = true)
     @Query("delete Post p where p.id = ?1")
