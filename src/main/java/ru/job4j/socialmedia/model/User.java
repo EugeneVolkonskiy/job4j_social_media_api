@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Entity
 @AllArgsConstructor
@@ -22,4 +25,12 @@ public class User {
     private String login;
     private String email;
     private String password;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Post> posts = new ArrayList<>();
+
+    private void addPost(Post post) {
+        posts.add(post);
+        post.setUser(this);
+    }
 }
