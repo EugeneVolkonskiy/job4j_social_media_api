@@ -1,5 +1,6 @@
 package ru.job4j.socialmedia.controller;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -30,7 +31,7 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Post> save(@RequestBody Post post) {
+    public ResponseEntity<Post> save(@Valid @RequestBody Post post) {
         postService.save(post, post.getUser());
         var uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -43,7 +44,7 @@ public class PostController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> update(@RequestBody Post post) {
+    public ResponseEntity<Void> update(@Valid @RequestBody Post post) {
         if (postService.updateTitleAndContent(post.getTitle(), post.getContent(), post.getId()) > 0) {
             return ResponseEntity.ok().build();
         }
@@ -51,7 +52,9 @@ public class PostController {
     }
 
     @DeleteMapping("/{postId}")
-    public ResponseEntity<Void> removeById(@PathVariable Long postId) {
+    public ResponseEntity<Void> removeById(@PathVariable
+                                           @NotNull
+                                           @Min(value = 1, message = "номер ресурса должен быть 1 и более") Long postId) {
         if (postService.deletePostById(postId) > 0) {
             return ResponseEntity.noContent().build();
         }
